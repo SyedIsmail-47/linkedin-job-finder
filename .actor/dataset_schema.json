@@ -1,0 +1,59 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "id": { "type": "string", "description": "LinkedIn job ID" },
+      "url": { "type": "string", "description": "Canonical LinkedIn job URL" },
+      "title": { "type": ["string", "null"] },
+      "company": { "type": ["string", "null"] },
+      "companyUrl": { "type": ["string", "null"] },
+      "location": { "type": ["string", "null"] },
+      "workplaceType": { "type": ["string", "null"], "description": "remote or hybrid when detected, otherwise null" },
+      "postedAt": { "type": ["string", "null"], "description": "Posting date (YYYY-MM-DD)" },
+      "postedAtText": { "type": ["string", "null"] },
+      "salaryText": { "type": ["string", "null"] },
+      "seniorityLevel": { "type": ["string", "null"] },
+      "employmentType": { "type": ["string", "null"] },
+      "jobFunction": { "type": ["string", "null"] },
+      "industries": { "type": ["string", "null"] },
+      "applicantsText": { "type": ["string", "null"] },
+      "applyType": { "type": "string", "description": "EXTERNAL, EASY_APPLY or UNKNOWN (best effort)" },
+      "applyUrl": { "type": ["string", "null"], "description": "Employer application link when external, otherwise the LinkedIn job URL" },
+      "description": { "type": ["string", "null"] },
+      "requirements": { "type": "array", "items": { "type": "string" } },
+      "requirementsSource": { "type": "string", "description": "section, heuristic or none" },
+      "skills": { "type": "array", "items": { "type": "string" } },
+      "minYearsExperience": { "type": ["integer", "null"] },
+      "detailsFetched": { "type": "boolean" },
+      "searchKeyword": { "type": "string" },
+      "searchLocation": { "type": "string" },
+      "scrapedAt": { "type": "string" }
+    },
+    "required": []
+  },
+  "views": {
+    "jobs": {
+      "title": "Jobs",
+      "description": "Jobs with application links and requirements",
+      "transformation": {
+        "fields": ["title", "company", "location", "postedAt", "applyType", "applyUrl", "minYearsExperience", "skills", "url"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": { "label": "Title", "format": "text" },
+          "company": { "label": "Company", "format": "text" },
+          "location": { "label": "Location", "format": "text" },
+          "postedAt": { "label": "Posted", "format": "text" },
+          "applyType": { "label": "Apply type", "format": "text" },
+          "applyUrl": { "label": "Apply", "format": "link" },
+          "minYearsExperience": { "label": "Min years", "format": "number" },
+          "skills": { "label": "Skills", "format": "array" },
+          "url": { "label": "LinkedIn", "format": "link" }
+        }
+      }
+    }
+  }
+}

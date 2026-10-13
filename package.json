@@ -1,0 +1,32 @@
+{
+  "name": "linkedin-job-finder",
+  "version": "0.1.0",
+  "description": "Apify Actor: find LinkedIn jobs from public guest pages with application links and extracted requirements.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "npm run start:dev",
+    "start:dev": "tsx src/main.ts",
+    "start:prod": "node dist/main.js",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "mock": "cross-env LJF_MOCK=1 tsx src/main.ts"
+  },
+  "dependencies": {
+    "apify": "^3.7.2",
+    "cheerio": "^1.2.0",
+    "got-scraping": "^4.2.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "cross-env": "^10.1.0",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

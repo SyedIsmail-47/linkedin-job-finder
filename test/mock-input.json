@@ -1,0 +1,9 @@
+{
+  "keywords": ["data engineer"],
+  "locations": ["Berlin"],
+  "maxJobsPerSearch": 10,
+  "incrementalMode": true,
+  "stateKey": "mock-demo",
+  "requestDelayMs": 300,
+  "titleExclude": ["intern"]
+}

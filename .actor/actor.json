@@ -1,0 +1,13 @@
+{
+  "actorSpecification": 1,
+  "name": "linkedin-job-finder",
+  "title": "LinkedIn Job Finder: Apply Links, Requirements & New-Job Alerts",
+  "description": "Search public LinkedIn job listings by keyword and location. Get the application link, extracted requirements, skills and years of experience. Incremental mode and Telegram/Slack/Discord/webhook alerts for new jobs.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "input": "./input_schema.json",
+  "dockerfile": "../Dockerfile",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  }
+}

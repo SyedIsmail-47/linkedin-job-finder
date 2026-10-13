@@ -1,0 +1,220 @@
+{
+  "title": "LinkedIn Job Finder",
+  "type": "object",
+  "schemaVersion": 1,
+  "description": "Search public LinkedIn job listings. No login or cookies needed.",
+  "properties": {
+    "keywords": {
+      "title": "Job keywords",
+      "type": "array",
+      "description": "One or more search phrases, for example \"data engineer\" or \"product manager\". Each keyword is searched in every location.",
+      "editor": "stringList",
+      "prefill": ["data engineer"],
+      "sectionCaption": "Search",
+      "sectionDescription": "What to look for and where."
+    },
+    "locations": {
+      "title": "Locations",
+      "type": "array",
+      "description": "City, region or country names as you would type them on LinkedIn, for example \"Berlin\" or \"United States\". Defaults to United States.",
+      "editor": "stringList",
+      "prefill": ["United States"]
+    },
+    "datePosted": {
+      "title": "Date posted",
+      "type": "string",
+      "description": "Only jobs posted within this window.",
+      "editor": "select",
+      "default": "week",
+      "enum": ["any", "24h", "week", "month"],
+      "enumTitles": ["Any time", "Past 24 hours", "Past week", "Past month"]
+    },
+    "sortBy": {
+      "title": "Sort by",
+      "type": "string",
+      "description": "Order LinkedIn uses for the search results.",
+      "editor": "select",
+      "default": "recent",
+      "enum": ["recent", "relevant"],
+      "enumTitles": ["Most recent", "Most relevant"]
+    },
+    "maxJobsPerSearch": {
+      "title": "Max jobs per search",
+      "type": "integer",
+      "description": "Maximum jobs collected for each keyword and location pair. LinkedIn's public search returns roughly 1,000 results per search at most.",
+      "default": 50,
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "workTypes": {
+      "title": "Workplace type",
+      "type": "array",
+      "description": "Leave empty for all.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": ["onsite", "remote", "hybrid"],
+        "enumTitles": ["On-site", "Remote", "Hybrid"]
+      },
+      "sectionCaption": "Filters",
+      "sectionDescription": "Narrow the results. Title and company filters run before details are fetched, so rejected jobs cost nothing."
+    },
+    "jobTypes": {
+      "title": "Job type",
+      "type": "array",
+      "description": "Leave empty for all.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": ["full-time", "part-time", "contract", "temporary", "internship", "volunteer", "other"],
+        "enumTitles": ["Full-time", "Part-time", "Contract", "Temporary", "Internship", "Volunteer", "Other"]
+      }
+    },
+    "experienceLevels": {
+      "title": "Experience level",
+      "type": "array",
+      "description": "Leave empty for all.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": ["internship", "entry", "associate", "mid-senior", "director", "executive"],
+        "enumTitles": ["Internship", "Entry level", "Associate", "Mid-Senior level", "Director", "Executive"]
+      }
+    },
+    "easyApplyOnly": {
+      "title": "Easy Apply only",
+      "type": "boolean",
+      "description": "Only jobs that can be applied to directly on LinkedIn.",
+      "default": false
+    },
+    "titleInclude": {
+      "title": "Title must contain (any of)",
+      "type": "array",
+      "description": "Keep only jobs whose title contains at least one of these words. Case-insensitive.",
+      "editor": "stringList"
+    },
+    "titleExclude": {
+      "title": "Title must NOT contain",
+      "type": "array",
+      "description": "Drop jobs whose title contains any of these words, for example \"intern\" or \"junior\".",
+      "editor": "stringList"
+    },
+    "companyExclude": {
+      "title": "Exclude companies",
+      "type": "array",
+      "description": "Drop jobs from companies whose name contains any of these words.",
+      "editor": "stringList"
+    },
+    "fetchDetails": {
+      "title": "Fetch job details",
+      "type": "boolean",
+      "description": "ON (default): opens each job to get the full description, the application link, the extracted requirements, skills and years of experience. OFF: fast mode with title, company, location, date and salary only.",
+      "default": true,
+      "sectionCaption": "Output",
+      "sectionDescription": "Control what each result contains."
+    },
+    "compact": {
+      "title": "Compact output",
+      "type": "boolean",
+      "description": "Core fields only, without the full description. Ideal for AI agents and automations that pay per token.",
+      "default": false
+    },
+    "excludeEmptyFields": {
+      "title": "Exclude empty fields",
+      "type": "boolean",
+      "description": "Drop null, empty text and empty list fields from each result.",
+      "default": false
+    },
+    "incrementalMode": {
+      "title": "Only new jobs (incremental mode)",
+      "type": "boolean",
+      "description": "Remember every job already delivered and return only jobs you have not seen before. Ideal for scheduled daily runs: you are only charged for new jobs.",
+      "default": false,
+      "sectionCaption": "Monitoring",
+      "sectionDescription": "Run on a schedule and receive only what is new."
+    },
+    "stateKey": {
+      "title": "State key (optional)",
+      "type": "string",
+      "description": "Name that identifies this tracked search, for example \"berlin-data-jobs\". Leave empty to derive it automatically from your search settings, so different searches never share memory.",
+      "editor": "textfield"
+    },
+    "telegramToken": {
+      "title": "Telegram bot token",
+      "type": "string",
+      "description": "From @BotFather. Needs the chat ID below.",
+      "editor": "textfield",
+      "isSecret": true,
+      "sectionCaption": "Notifications",
+      "sectionDescription": "Get a digest of new jobs after each run. Failures never fail the run."
+    },
+    "telegramChatId": {
+      "title": "Telegram chat ID",
+      "type": "string",
+      "description": "Chat or channel ID, for example -100123456789.",
+      "editor": "textfield"
+    },
+    "discordWebhookUrl": {
+      "title": "Discord webhook URL",
+      "type": "string",
+      "description": "Discord channel webhook URL.",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "slackWebhookUrl": {
+      "title": "Slack webhook URL",
+      "type": "string",
+      "description": "Slack incoming webhook URL.",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "webhookUrl": {
+      "title": "Webhook URL (n8n, Make, Zapier, custom)",
+      "type": "string",
+      "description": "Receives a JSON POST with the new jobs after each run.",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "notificationLimit": {
+      "title": "Jobs per chat message",
+      "type": "integer",
+      "description": "How many jobs to list in each Telegram, Slack or Discord message (1-20).",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 20
+    },
+    "proxyConfiguration": {
+      "title": "Proxy configuration",
+      "type": "object",
+      "description": "Apify Proxy settings. If you see blocked requests, switch to the RESIDENTIAL proxy group.",
+      "editor": "proxy",
+      "default": { "useApifyProxy": true },
+      "prefill": { "useApifyProxy": true },
+      "sectionCaption": "Advanced",
+      "sectionDescription": "Only change these if you hit blocks or want to go slower."
+    },
+    "requestDelayMs": {
+      "title": "Delay between requests (ms)",
+      "type": "integer",
+      "description": "Minimum pause between requests. Higher is slower but gentler and less likely to be blocked.",
+      "default": 1500,
+      "minimum": 300,
+      "maximum": 15000
+    },
+    "detailConcurrency": {
+      "title": "Parallel detail fetches",
+      "type": "integer",
+      "description": "How many job detail pages to fetch at once. Keep low (1-2) to reduce block risk.",
+      "default": 2,
+      "minimum": 1,
+      "maximum": 5
+    },
+    "saveSampleHtml": {
+      "title": "Save sample HTML (debugging)",
+      "type": "boolean",
+      "description": "Stores one raw search page and one raw job page in the key-value store (SAMPLE_SEARCH_PAGE, SAMPLE_DETAIL_PAGE). Useful for reporting a parsing problem.",
+      "default": false
+    }
+  },
+  "required": ["keywords"]
+}

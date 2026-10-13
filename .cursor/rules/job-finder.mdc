@@ -1,0 +1,13 @@
+---
+description: Project conventions for the LinkedIn Job Finder Apify Actor
+alwaysApply: true
+---
+- Stack: Node 22, TypeScript strict, ESM (`.js` suffix on relative imports), Apify SDK 3.x, got-scraping, cheerio, zod, vitest.
+- Never invent APIs. Read the installed package types in node_modules before using an SDK method.
+- LinkedIn access is logged-out guest endpoints only. No cookies, no login, no personal data about people (no recruiter or poster names).
+- Parsers (`parse.ts`, `requirements.ts`) are pure and tested against fixtures in `test/fixtures`. Never fabricate fixtures: real captures come from the `saveSampleHtml` option. Synthetic fixtures are labeled SYNTHETIC.
+- Never log resume/secret values. Secrets in input are `isSecret` and masked by `sanitizeInputForLog`.
+- Charge only after the item was pushed. Never charge for duplicates, filtered jobs or failed detail fetches.
+- `.actor/input_schema.json` and `src/input.ts` must stay in sync (a test enforces it).
+- Small diffs. Do not add dependencies without asking. Run `npm run typecheck && npm test` before finishing.
+- If a requirement is ambiguous or blocked, stop and ask.
