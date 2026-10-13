@@ -153,3 +153,8 @@ Then resume in a new chat (or continue) from Phase 7.
 | Command | Exit | Evidence |
 |---|---|---|
 | `npm test` | 0 | `Tests  107 passed (107)` |
+| `apify push --force --wait-for-finish=600` | 0 | Build **0.1.3** `qvCx08pM4b0Rr2ajZ` SUCCEEDED |
+| smoke `maxJobsPerSearch: 10` | 0 | Run `9rsCUL2I2py5Rq9j0`: `jobsPushed:10`, `detailsOk:10`, dataset `SbOgEMgYSXUDvBq2q` |
+
+### NEXT
+Set `APIFY_TOKEN` and `npm run spike` / `npm run summarize`, then Phase 7.
