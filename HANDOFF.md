@@ -49,7 +49,13 @@ Each run makes roughly 150 detail requests plus search pages, which is about 300
 - `jobsPushed`, `detailsOk`, `detailFailures`
 - Run cost and duration (Console, Usage)
 
-**Go/No-go rule (proposed):** continue only if success rate is at least 98% over at least 300 requests at some tier, AND measured platform cost per 1,000 enriched jobs is at most 40% of the price you plan to charge for them. If no tier passes, do not publish this Actor. Switch to the courier-tracker or an Ideas-page pick.
+**Go / No-go (v0.2):** After `npm run spike` + `npm run summarize`, judge each tier by job yield and detail success (not raw HTTP 200 rate):
+
+- **PASS:** `jobYield >= 0.95`, `detailSuccess >= 0.95`, no `abortedReason`, `blockedShare <= 0.25`
+- **MARGINAL:** `jobYield >= 0.80` and no `abortedReason`
+- **FAIL** otherwise; plan/proxy entitlement errors are **INCONCLUSIVE**
+
+Write `docs/NO-GO.md` **only when every runnable tier FAILs** (ignore INCONCLUSIVE). Pricing still requires measured cost ≤ 40% of the price you plan to charge.
 
 ## 3. Replace synthetic fixtures with real ones (same runs)
 

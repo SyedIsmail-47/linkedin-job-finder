@@ -139,3 +139,17 @@ npm run summarize
 ```
 
 Then resume in a new chat (or continue) from Phase 7.
+
+---
+
+## Phase 6b — spike verdict + push
+
+### Rule change
+- Verdicts use jobYield / detailSuccess / blockedShare (rawSuccess informational).
+- NO-GO only if every **runnable** tier FAILs.
+- Smoke sample (32×200 / 22×429 / 30 jobs / 29 details) → **MARGINAL** (unit-tested).
+
+### Commands
+| Command | Exit | Evidence |
+|---|---|---|
+| `npm test` | 0 | `Tests  107 passed (107)` |
