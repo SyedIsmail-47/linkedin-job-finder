@@ -124,12 +124,12 @@ export function parseApply(html: string, $: cheerio.CheerioAPI, jobUrl: string):
   }
   if (external) return { applyType: 'EXTERNAL', applyUrl: external };
 
-  // Guest pages often gate the real employer URL behind a sign-in modal. Offsite vs Easy Apply
-  // still leave detectable markup (icon class / tracking / impression id).
+  // Guest pages often gate the real employer URL behind a sign-in modal. Off-site signals remain
+  // (icon class / tracking / impression id) — classify as EXTERNAL_HIDDEN, applyUrl = LinkedIn job URL.
   const offsiteGated =
     /apply-link-offsite|offsite-apply-icon|apply-button__offsite/i.test(html) ||
     $('[data-impression-id*="apply-link-offsite"], [data-tracking-control-name*="apply-link-offsite"]').length > 0;
-  if (offsiteGated) return { applyType: 'EXTERNAL', applyUrl: jobUrl };
+  if (offsiteGated) return { applyType: 'EXTERNAL_HIDDEN', applyUrl: jobUrl };
 
   const easy =
     $('[data-tracking-control-name*="easy-apply"]').length > 0 ||

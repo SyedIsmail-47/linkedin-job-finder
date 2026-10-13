@@ -9,7 +9,7 @@ No LinkedIn login, cookies or browser extension. Public job pages only.
 | Field | Example |
 |---|---|
 | `title`, `company`, `location`, `postedAt` | Senior Data Engineer, Acme Analytics, Berlin, 2026-10-11 |
-| `applyUrl` + `applyType` | The employer's own application page (`EXTERNAL`), or the LinkedIn job page (`EASY_APPLY` / `UNKNOWN`) |
+| `applyUrl` + `applyType` | `EXTERNAL` = resolved employer URL; `EXTERNAL_HIDDEN` = off-site apply but LinkedIn hid the employer URL (you get the LinkedIn job URL); `EASY_APPLY` / `UNKNOWN` = LinkedIn job URL |
 | `requirements` | `["5+ years of experience in data engineering", "Strong Python and SQL skills", ...]` |
 | `skills` | `["Python", "SQL", "Airflow", "Snowflake", "AWS"]` |
 | `minYearsExperience` | `5` |
@@ -83,7 +83,7 @@ You are never charged for jobs that were filtered out, duplicates, or jobs you a
 - **About 1,000 results per search.** LinkedIn's public search stops there. Use more specific keywords and locations to go deeper.
 - **Requirements are extracted, not guaranteed.** They come from headings like "Requirements" or "Qualifications"; when none exist, bullet points that look like requirements are used (`requirementsSource: "heuristic"`). Always check the original posting.
 - **Skills** are matched against a built-in list of common technical and business tools, anywhere in the description.
-- **Apply type is best effort.** When LinkedIn shows no external link you get the LinkedIn job URL.
+- **Employer apply URLs are not available for every job.** Guest pages often hide the real employer link behind a sign-in wall. Those jobs are tagged `EXTERNAL_HIDDEN` and `applyUrl` is the LinkedIn job page — not an employer career site.
 - **LinkedIn can change its pages at any time**, which can temporarily affect results. Report problems in the Issues tab, ideally with the sample HTML option enabled.
 - If you see blocked requests, switch the proxy group to **RESIDENTIAL** or raise the delay between requests.
 
@@ -97,4 +97,4 @@ The Actor reads only information that LinkedIn shows to logged-out visitors and 
 
 **How do I get only new jobs every day?** Turn on incremental mode and schedule the Actor. Use the same search settings (or the same state key) each time.
 
-**Why is `applyUrl` a LinkedIn link?** The job is an Easy Apply job or LinkedIn did not expose an external link for it.
+**Why is `applyUrl` a LinkedIn link?** Check `applyType`: `EASY_APPLY`, `EXTERNAL_HIDDEN` (off-site apply gated on the guest page), or `UNKNOWN`. Only `EXTERNAL` means a real employer URL was resolved.

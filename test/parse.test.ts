@@ -58,7 +58,7 @@ describe('parseJobDetail', () => {
     expect(d.applyUrl).toBe('https://www.linkedin.com/jobs/view/1000000003');
   });
 
-  it('marks EXTERNAL when guest HTML gates the offsite URL behind sign-in', () => {
+  it('marks EXTERNAL_HIDDEN when guest HTML gates the offsite URL behind sign-in', () => {
     const html = `
       <h2 class="top-card-layout__title">Engineer</h2>
       <button class="top-card-layout__cta" data-modal="job-details-topcard-apply-modal">Apply
@@ -67,9 +67,15 @@ describe('parseJobDetail', () => {
       <div class="contextual-sign-in-modal" data-impression-id="public_jobs_apply-link-offsite_contextual-sign-in-modal"></div>
       <div class="show-more-less-html__markup"><p>Build things</p></div>`;
     const d = parseJobDetail(html, 'https://www.linkedin.com/jobs/view/999');
-    expect(d.applyType).toBe('EXTERNAL');
+    expect(d.applyType).toBe('EXTERNAL_HIDDEN');
     expect(d.applyUrl).toBe('https://www.linkedin.com/jobs/view/999');
     expect(d.title).toBe('Engineer');
+  });
+
+  it('marks EXTERNAL_HIDDEN on real gated detail fixture', () => {
+    const d = parseJobDetail(fixture('real-detail-1.html'), 'https://www.linkedin.com/jobs/view/4476983365');
+    expect(d.applyType).toBe('EXTERNAL_HIDDEN');
+    expect(d.applyUrl).toBe('https://www.linkedin.com/jobs/view/4476983365');
   });
 
   it('does not throw on garbage input', () => {

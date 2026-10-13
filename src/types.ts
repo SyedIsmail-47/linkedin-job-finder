@@ -17,7 +17,8 @@ export interface JobCard {
   salaryText: string | null;
 }
 
-export type ApplyType = 'EXTERNAL' | 'EASY_APPLY' | 'UNKNOWN';
+/** EXTERNAL = resolved employer URL; EXTERNAL_HIDDEN = off-site apply gated (LinkedIn job URL only). */
+export type ApplyType = 'EXTERNAL' | 'EXTERNAL_HIDDEN' | 'EASY_APPLY' | 'UNKNOWN';
 export type RequirementsSource = 'section' | 'heuristic' | 'none';
 
 /** Parsed from the guest job detail endpoint. */

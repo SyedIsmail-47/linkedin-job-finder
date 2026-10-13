@@ -19,7 +19,7 @@ Synthetic fixtures in `test/fixtures/search-page.html` and `detail-100000000*.ht
 | Detail title selector | `h2.top-card-layout__title` | **Works** (`Software Engineer II (Java/AWS)`) |
 | Description | `.show-more-less-html__markup` | **Works** (description length 5703 on detail-1) |
 | `code#applyUrl` with employer URL | Present on guest pages | **Absent** on detail-1; employer URL gated behind sign-in modal |
-| Off-site apply signal | Easy-detect apply link | Modal + `apply-link-offsite` / `apply-button__offsite-apply-icon-svg` present; parser currently maps to `EXTERNAL` with LinkedIn job URL (Phase 3 → `EXTERNAL_HIDDEN`) |
+| Off-site apply signal | Easy-detect apply link | Modal + `apply-link-offsite` / `apply-button__offsite-apply-icon-svg` present; parser maps to **`EXTERNAL_HIDDEN`** with LinkedIn job URL |
 | Easy Apply | Distinct markup | **Not present** on detail-1. Smoke dataset `hm4AuvHLo6ffWFXfY` (30 jobs): `EXTERNAL: 29`, `UNKNOWN: 1`, `EASY_APPLY: 0` |
 | Filter `f_TPR` (week) | Unverified | Search sample came from a run with `datePosted: "week"` that returned HTTP 200 and 10 cards — **accepted as working for that capture**. Other filter codes (`f_WT`, `f_JT`, `f_E`, `f_AL`, `sortBy`) **not confirmed** (would need one request each, ≥60s apart; not run in this phase). |
 

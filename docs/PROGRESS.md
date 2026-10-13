@@ -69,3 +69,15 @@ Phase 2 — parser ground truth + real fixtures.
 
 ### NEXT
 Phase 3 — apply semantics (`EXTERNAL_HIDDEN`).
+
+---
+
+## Phase 3 — APPLY SEMANTICS — PASS
+
+### Commands
+| Command | Exit | Evidence |
+|---|---|---|
+| `npm test` | 0 | `Tests  90 passed (90)` incl. real-detail `EXTERNAL_HIDDEN` |
+
+### NEXT
+Phase 4 — rate-limit resilience.

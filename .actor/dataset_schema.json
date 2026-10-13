@@ -19,8 +19,14 @@
       "jobFunction": { "type": ["string", "null"] },
       "industries": { "type": ["string", "null"] },
       "applicantsText": { "type": ["string", "null"] },
-      "applyType": { "type": "string", "description": "EXTERNAL, EASY_APPLY or UNKNOWN (best effort)" },
-      "applyUrl": { "type": ["string", "null"], "description": "Employer application link when external, otherwise the LinkedIn job URL" },
+      "applyType": {
+        "type": "string",
+        "description": "EXTERNAL (employer URL resolved), EXTERNAL_HIDDEN (off-site apply gated; LinkedIn URL only), EASY_APPLY, or UNKNOWN"
+      },
+      "applyUrl": {
+        "type": ["string", "null"],
+        "description": "Employer application URL only when applyType is EXTERNAL; otherwise the LinkedIn job URL (not guaranteed to be an employer site)"
+      },
       "description": { "type": ["string", "null"] },
       "requirements": { "type": "array", "items": { "type": "string" } },
       "requirementsSource": { "type": "string", "description": "section, heuristic or none" },
