@@ -108,3 +108,34 @@ Phase 5 — quality tooling.
 
 ### NEXT
 Phase 6 — spike kit; STOP if `APIFY_TOKEN` unset.
+
+---
+
+## Phase 6 — SPIKE KIT — STOPPED (waiting on APIFY_TOKEN)
+
+### Delivered
+- `scripts/spike/inputs/{no-proxy,datacenter,residential,slow-datacenter}.json`
+- `scripts/run-spike.ts`, `scripts/summarize-stats.ts`
+- npm scripts: `spike`, `summarize`
+- `apify-client` in devDependencies (usage field: `ActorRun.usageTotalUsd` per `actor.d.ts`)
+
+### Commands
+| Command | Exit | Evidence |
+|---|---|---|
+| `npm test` | 0 | `Tests  102 passed (102)` |
+| `npm run spike` | 1 | `APIFY_TOKEN is not set. Export it, then re-run: npm run spike` |
+
+### STOP
+`docs/spike/*.json` do not exist yet. Phases 7–9 blocked until spike data is written.
+
+### NEXT (you)
+Set token and run spike (PowerShell):
+
+```powershell
+$env:APIFY_TOKEN = "<your token from https://console.apify.com/account#/integrations>"
+cd C:\Users\Ismail\Downloads\linkedin-job-finder-extract\linkedin-job-finder
+npm run spike
+npm run summarize
+```
+
+Then resume in a new chat (or continue) from Phase 7.

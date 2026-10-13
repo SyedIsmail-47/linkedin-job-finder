@@ -14,7 +14,9 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "mock": "cross-env LJF_MOCK=1 tsx src/main.ts"
+    "mock": "cross-env LJF_MOCK=1 tsx src/main.ts",
+    "spike": "tsx scripts/run-spike.ts",
+    "summarize": "tsx scripts/summarize-stats.ts"
   },
   "dependencies": {
     "apify": "^3.7.2",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "apify-client": "^2.25.0",
     "cross-env": "^10.1.0",
     "tsx": "^4.20.0",
     "typescript": "~5.9.0",

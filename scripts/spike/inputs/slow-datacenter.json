@@ -1,0 +1,13 @@
+{
+  "keywords": ["software engineer"],
+  "locations": ["United States"],
+  "maxJobsPerSearch": 150,
+  "fetchDetails": true,
+  "saveSampleHtml": true,
+  "requestDelayMs": 3000,
+  "detailConcurrency": 1,
+  "incrementalMode": false,
+  "proxyConfiguration": {
+    "useApifyProxy": true
+  }
+}
