@@ -81,3 +81,18 @@ Phase 3 — apply semantics (`EXTERNAL_HIDDEN`).
 
 ### NEXT
 Phase 4 — rate-limit resilience.
+
+---
+
+## Phase 4 — RATE-LIMIT RESILIENCE — PASS
+
+### Changes
+- Retry-After honored; adaptive delay; `bytesReceived`, `requestsByKind`, `totalBackoffMs`; `durationMs` on STATS.
+
+### Commands
+| Command | Exit | Evidence |
+|---|---|---|
+| `npm test` | 0 | `Tests  96 passed (96)` |
+
+### NEXT
+Phase 5 — quality tooling.

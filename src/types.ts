@@ -76,6 +76,9 @@ export interface HttpStats {
   networkErrors: number;
   sessionsRetired: number;
   statusHistogram: Record<string, number>;
+  bytesReceived: number;
+  requestsByKind: { search: number; detail: number };
+  totalBackoffMs: number;
 }
 
 export interface RunStats {
@@ -89,11 +92,22 @@ export interface RunStats {
   detailFailures: number;
   stoppedByChargeLimit: boolean;
   abortedReason: string | null;
+  durationMs: number;
   http: HttpStats;
 }
 
 export function newHttpStats(): HttpStats {
-  return { requests: 0, retries: 0, blocked: 0, networkErrors: 0, sessionsRetired: 0, statusHistogram: {} };
+  return {
+    requests: 0,
+    retries: 0,
+    blocked: 0,
+    networkErrors: 0,
+    sessionsRetired: 0,
+    statusHistogram: {},
+    bytesReceived: 0,
+    requestsByKind: { search: 0, detail: 0 },
+    totalBackoffMs: 0,
+  };
 }
 
 export function newRunStats(http: HttpStats = newHttpStats()): RunStats {
@@ -108,6 +122,7 @@ export function newRunStats(http: HttpStats = newHttpStats()): RunStats {
     detailFailures: 0,
     stoppedByChargeLimit: false,
     abortedReason: null,
+    durationMs: 0,
     http,
   };
 }

@@ -28,6 +28,7 @@ async function run(): Promise<void> {
   }
   log.info(`Input: ${JSON.stringify(sanitizeInputForLog(input))}`);
 
+  const startedAt = Date.now();
   const httpStats = newHttpStats();
   const stats = newRunStats(httpStats);
 
@@ -92,6 +93,7 @@ async function run(): Promise<void> {
   const queries = input.keywords.join(', ') + ' · ' + input.locations.join(', ');
   const notifications = await sendNotifications(input.notify, emitted, { queries }, { log });
 
+  stats.durationMs = Date.now() - startedAt;
   await Actor.setValue('STATS', { ...stats, charged: billing.charged, notifications });
   log.info(`Done: ${JSON.stringify({ ...stats, http: undefined })}`);
   log.info(`HTTP: ${JSON.stringify(httpStats)}`);
