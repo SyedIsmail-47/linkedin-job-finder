@@ -96,3 +96,15 @@ Phase 4 — rate-limit resilience.
 
 ### NEXT
 Phase 5 — quality tooling.
+
+---
+
+## Phase 5 — QUALITY TOOLING — PASS
+
+### Commands
+| Command | Exit | Evidence |
+|---|---|---|
+| `npm test` | 0 | `Tests  102 passed (102)` |
+
+### NEXT
+Phase 6 — spike kit; STOP if `APIFY_TOKEN` unset.
