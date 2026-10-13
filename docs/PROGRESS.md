@@ -47,3 +47,25 @@
 
 ### NEXT
 Phase 2 — parser ground truth + real fixtures.
+
+---
+
+## Phase 2 — PARSER GROUND TRUTH — PASS (with gap)
+
+### Deliverables
+- `test/fixtures/real-search-page.html`, `real-detail-1.html` from Apify KV of run `AgpgFLGw8jvCUtWJa`
+- `scripts/capture.ts`, `scripts/sanitize-fixture.ts`
+- `docs/GROUND_TRUTH.md`, `test/real-fixtures.test.ts`
+- `real-detail-2.html` **not captured**: local `capture --detail-only` → HTTP 429, stopped (Rule 2)
+
+### Commands and results
+
+| Command | Exit | Evidence |
+|---|---|---|
+| Apify KV get SAMPLE_* | 0 | search 31429 bytes, detail 66785 bytes |
+| `npx tsx scripts/capture.ts --detail-only 4476882191 ...` | 2 | `STOP: HTTP 429` |
+| `npm test` | 0 | `Tests  89 passed (89)` |
+| `npm run typecheck` / `build` | 0 | clean |
+
+### NEXT
+Phase 3 — apply semantics (`EXTERNAL_HIDDEN`).

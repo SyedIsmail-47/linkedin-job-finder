@@ -3,3 +3,5 @@ dist
 storage
 apify_storage
 .env
+*.raw.html
+docs/spike/
