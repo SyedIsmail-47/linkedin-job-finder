@@ -92,6 +92,62 @@ describe('runPipeline', () => {
     expect(h.stats.stoppedByChargeLimit).toBe(true);
   });
 
+  it('does not charge job-enriched after charge limit is reached on job-listed', async () => {
+    const h = harness({}, { limitAfter: 1 });
+    await h.run();
+    expect(h.items).toHaveLength(1);
+    expect(h.charges).toEqual(['job-listed']);
+    expect(h.stats.stoppedByChargeLimit).toBe(true);
+  });
+
+  it('does not charge when emit throws (push failed)', async () => {
+    const input = normalizeInput({ keywords: ['data engineer'], locations: ['Berlin'], requestDelayMs: 300 });
+    const charges: ChargeEvent[] = [];
+    await expect(
+      runPipeline(
+        input,
+        {
+          http: new MockHttpClient(fixtureDir),
+          seen: null,
+          log: silentLog,
+          emit: async () => {
+            throw new Error('pushData failed');
+          },
+          charge: async (e) => {
+            charges.push(e);
+            return false;
+          },
+        },
+        newRunStats(),
+      ),
+    ).rejects.toThrow('pushData failed');
+    expect(charges).toEqual([]);
+  });
+
+  it('calls onQueryDone after each completed search query', async () => {
+    const input = normalizeInput({
+      keywords: ['data engineer', 'analytics engineer'],
+      locations: ['Berlin'],
+      requestDelayMs: 300,
+    });
+    let saves = 0;
+    await runPipeline(
+      input,
+      {
+        http: new MockHttpClient(fixtureDir),
+        seen: null,
+        log: silentLog,
+        emit: async () => {},
+        charge: async () => false,
+        onQueryDone: async () => {
+          saves++;
+        },
+      },
+      newRunStats(),
+    );
+    expect(saves).toBe(2);
+  });
+
   it('ends gracefully with partial results when LinkedIn blocks mid-run', async () => {
     const real = new MockHttpClient(fixtureDir);
     let calls = 0;

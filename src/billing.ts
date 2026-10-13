@@ -1,4 +1,5 @@
 import { Actor } from 'apify';
+import { sanitizeErrorMessage } from './sanitize.js';
 import type { Logger } from './types.js';
 
 export type ChargeEvent = 'job-listed' | 'job-enriched';
@@ -22,7 +23,8 @@ export class Billing {
     } catch (err) {
       if (!this.warned) {
         this.warned = true;
-        this.log.warning(`Charging "${eventName}" failed (${err instanceof Error ? err.message : 'unknown error'}); continuing without charge.`);
+        const detail = err instanceof Error ? sanitizeErrorMessage(err.message) : 'unknown error';
+        this.log.warning(`Charging "${eventName}" failed (${detail}); continuing without charge.`);
       }
     }
   }

@@ -7,6 +7,7 @@ import { deriveStateKey, normalizeInput, sanitizeInputForLog, type NormalizedInp
 import { applyOutputOptions } from './item.js';
 import { sendNotifications } from './notify.js';
 import { runPipeline } from './pipeline.js';
+import { sanitizeErrorMessage } from './sanitize.js';
 import { newHttpStats, newRunStats, type JobItem } from './types.js';
 
 /** An error whose message is meant for the user (shown as the run's failure reason). */
@@ -56,6 +57,9 @@ async function run(): Promise<void> {
 
   const billing = new Billing(log);
   const emitted: JobItem[] = [];
+  const persistSeen = async (): Promise<void> => {
+    await seen?.save();
+  };
 
   await runPipeline(
     input,
@@ -64,8 +68,8 @@ async function run(): Promise<void> {
       seen,
       log,
       emit: async (item) => {
-        emitted.push(item);
         await Actor.pushData(applyOutputOptions(item, { compact: input.compact, excludeEmptyFields: input.excludeEmptyFields }));
+        emitted.push(item);
       },
       sample: input.saveSampleHtml
         ? async (kind, body) => {
@@ -78,11 +82,12 @@ async function run(): Promise<void> {
         await billing.charge(event);
         return billing.limitReached;
       },
+      onQueryDone: persistSeen,
     },
     stats,
   );
 
-  await seen?.save();
+  await persistSeen();
 
   const queries = input.keywords.join(', ') + ' · ' + input.locations.join(', ');
   const notifications = await sendNotifications(input.notify, emitted, { queries }, { log });
@@ -111,7 +116,8 @@ try {
   await run();
   await Actor.exit();
 } catch (err) {
-  const message = err instanceof UserError ? err.message : `Unexpected error: ${err instanceof Error ? err.message : String(err)}`;
+  const raw = err instanceof UserError ? err.message : `Unexpected error: ${err instanceof Error ? err.message : String(err)}`;
+  const message = sanitizeErrorMessage(raw);
   log.error(message);
   await Actor.fail(message);
 }
